@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nono - 个人主页</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #00b894;
+            --secondary-color: #00a085;
+            --accent-color: #55efc4;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --bg-light: #f0f9f4;
+            --white: #ffffff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #00b894 0%, #00a085 50%, #016936 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 背景植物装饰 */
+        .bg-plants {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .plant-decoration {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.15;
+            animation: plantSway 4s ease-in-out infinite;
+        }
+
+        .plant-decoration:nth-child(1) { top: 5%; left: 2%; animation-delay: 0s; }
+        .plant-decoration:nth-child(2) { top: 15%; right: 3%; animation-delay: 0.5s; }
+        .plant-decoration:nth-child(3) { top: 35%; left: 1%; animation-delay: 1s; }
+        .plant-decoration:nth-child(4) { top: 50%; right: 2%; animation-delay: 1.5s; }
+        .plant-decoration:nth-child(5) { top: 70%; left: 3%; animation-delay: 2s; }
+        .plant-decoration:nth-child(6) { top: 85%; right: 4%; animation-delay: 2.5s; }
+        .plant-decoration:nth-child(7) { top: 25%; left: 5%; animation-delay: 3s; }
+        .plant-decoration:nth-child(8) { top: 60%; right: 1%; animation-delay: 3.5s; }
+        .plant-decoration:nth-child(9) { top: 10%; left: 8%; animation-delay: 0.3s; }
+        .plant-decoration:nth-child(10) { top: 30%; right: 6%; animation-delay: 0.8s; }
+        .plant-decoration:nth-child(11) { top: 45%; left: 4%; animation-delay: 1.3s; }
+        .plant-decoration:nth-child(12) { top: 65%; right: 5%; animation-delay: 1.8s; }
+        .plant-decoration:nth-child(13) { top: 80%; left: 6%; animation-delay: 2.3s; }
+        .plant-decoration:nth-child(14) { top: 20%; right: 8%; animation-delay: 2.8s; }
+        .plant-decoration:nth-child(15) { top: 55%; left: 7%; animation-delay: 3.3s; }
+        .plant-decoration:nth-child(16) { top: 75%; right: 7%; animation-delay: 3.8s; }
+
+        @keyframes plantSway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* 角落植物装饰 */
+        .corner-plant {
+            position: fixed;
+            font-size: 80px;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .corner-plant.top-left {
+            top: -20px;
+            left: -20px;
+            transform: rotate(-15deg);
+        }
+
+        .corner-plant.top-right {
+            top: -20px;
+            right: -20px;
+            transform: rotate(15deg);
+        }
+
+        .corner-plant.bottom-left {
+            bottom: -20px;
+            left: -20px;
+            transform: rotate(-15deg);
+        }
+
+        .corner-plant.bottom-right {
+            bottom: -20px;
+            right: -20px;
+            transform: rotate(15deg);
+        }
+
+        /* 漂浮叶子 */
+        .floating-leaves {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-leaf {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.3;
+            animation: leafFloat 8s linear infinite;
+        }
+
+        .floating-leaf:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 7s; }
+        .floating-leaf:nth-child(2) { left: 25%; animation-delay: 2s; animation-duration: 9s; }
+        .floating-leaf:nth-child(3) { left: 40%; animation-delay: 4s; animation-duration: 6s; }
+        .floating-leaf:nth-child(4) { left: 55%; animation-delay: 1s; animation-duration: 8s; }
+        .floating-leaf:nth-child(5) { left: 70%; animation-delay: 3s; animation-duration: 7s; }
+        .floating-leaf:nth-child(6) { left: 85%; animation-delay: 5s; animation-duration: 9s; }
+        .floating-leaf:nth-child(7) { left: 5%; animation-delay: 1.5s; animation-duration: 8s; }
+        .floating-leaf:nth-child(8) { left: 15%; animation-delay: 3.5s; animation-duration: 6s; }
+        .floating-leaf:nth-child(9) { left: 30%; animation-delay: 0.5s; animation-duration: 9s; }
+        .floating-leaf:nth-child(10) { left: 45%; animation-delay: 2.5s; animation-duration: 7s; }
+        .floating-leaf:nth-child(11) { left: 60%; animation-delay: 4.5s; animation-duration: 8s; }
+        .floating-leaf:nth-child(12) { left: 75%; animation-delay: 6s; animation-duration: 6s; }
+        .floating-leaf:nth-child(13) { left: 90%; animation-delay: 1s; animation-duration: 9s; }
+        .floating-leaf:nth-child(14) { left: 20%; animation-delay: 5s; animation-duration: 7s; }
+        .floating-leaf:nth-child(15) { left: 50%; animation-delay: 0s; animation-duration: 8s; }
+        .floating-leaf:nth-child(16) { left: 95%; animation-delay: 3s; animation-duration: 6s; }
+
+        @keyframes leafFloat {
+            0% {
+                top: -50px;
+                transform: rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                top: 100vh;
+                transform: rotate(360deg) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* 卡片内植物装饰 */
+        .card-plant {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        /* 底部草地装饰 */
+        .bottom-grass {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to top, rgba(0, 184, 148, 0.3) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding: 0 20px;
+        }
+
+        .grass-blade {
+            font-size: 35px;
+            opacity: 0.4;
+            animation: grassSway 3s ease-in-out infinite;
+        }
+
+        .grass-blade:nth-child(1) { animation-delay: 0s; }
+        .grass-blade:nth-child(2) { animation-delay: 0.2s; }
+        .grass-blade:nth-child(3) { animation-delay: 0.4s; }
+        .grass-blade:nth-child(4) { animation-delay: 0.6s; }
+        .grass-blade:nth-child(5) { animation-delay: 0.8s; }
+        .grass-blade:nth-child(6) { animation-delay: 1s; }
+        .grass-blade:nth-child(7) { animation-delay: 1.2s; }
+        .grass-blade:nth-child(8) { animation-delay: 1.4s; }
+        .grass-blade:nth-child(9) { animation-delay: 1.6s; }
+        .grass-blade:nth-child(10) { animation-delay: 1.8s; }
+
+        @keyframes grassSway {
+            0%, 100% { transform: rotate(-3deg) scaleY(1); }
+            50% { transform: rotate(3deg) scaleY(1.1); }
+        }
+
+        /* 藤蔓装饰 */
+        .vine-decoration {
+            position: fixed;
+            font-size: 50px;
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
+            animation: vineGrow 6s ease-in-out infinite;
+        }
+
+        .vine-decoration.left {
+            left: 0;
+            top: 30%;
+            transform: rotate(-90deg);
+        }
+
+        .vine-decoration.right {
+            right: 0;
+            top: 60%;
+            transform: rotate(90deg);
+        }
+
+        @keyframes vineGrow {
+            0%, 100% { transform: scaleY(1) rotate(var(--rotation, 0deg)); }
+            50% { transform: scaleY(1.1) rotate(var(--rotation, 0deg)); }
+        }
+
+        /* 花朵点缀 */
+        .flower-decoration {
+            position: fixed;
+            font-size: 25px;
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 1;
+            animation: flowerBloom 4s ease-in-out infinite;
+        }
+
+        .flower-decoration:nth-child(1) { top: 20%; left: 12%; animation-delay: 0s; }
+        .flower-decoration:nth-child(2) { top: 40%; right: 10%; animation-delay: 1s; }
+        .flower-decoration:nth-child(3) { top: 60%; left: 15%; animation-delay: 2s; }
+        .flower-decoration:nth-child(4) { top: 80%; right: 12%; animation-delay: 3s; }
+        .flower-decoration:nth-child(5) { top: 35%; left: 3%; animation-delay: 0.5s; }
+        .flower-decoration:nth-child(6) { top: 75%; right: 3%; animation-delay: 1.5s; }
+
+        @keyframes flowerBloom {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.25; }
+            50% { transform: scale(1.2) rotate(10deg); opacity: 0.35; }
+        }
+
+        .card {
+            position: relative;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease-out;
+            z-index: 2;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* 头部区域 */
+        .header {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .avatar-section {
+            flex-shrink: 0;
+        }
+        
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+            box-shadow: 0 5px 20px rgba(0, 184, 148, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .avatar::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .basic-info {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .name {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        .school-info {
+            color: var(--text-light);
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-light);
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .contact-item i {
+            color: #00b894;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        
+        .card-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-title i {
+            color: #00b894;
+        }
+        
+        /* 技能展示 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .skill-category {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 15px;
+        }
+        
+        .skill-category h4 {
+            color: #00a085;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .skill-item:last-child {
+            border-bottom: none;
+        }
+        
+        .skill-name {
+            font-weight: 500;
+        }
+        
+        .skill-level {
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        
+        .level-proficient {
+            background: #a8e6cf;
+            color: #016936;
+        }
+
+        .level-mastered {
+            background: #b8e994;
+            color: #016936;
+        }
+
+        .level-basic {
+            background: #d4edda;
+            color: #016936;
+        }
+
+        .level-learning {
+            background: #e8f5e9;
+            color: #016936;
+        }
+        
+        /* 经历展示 */
+        .experience-item {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #00b894;
+        }
+        
+        .experience-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .experience-title {
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        
+        .experience-desc {
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+        
+        /* 证书和学习计划 */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .cert-item {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .cert-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+        }
+        
+        .cert-content h4 {
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        
+        .cert-content p {
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+        
+        /* 兴趣爱好 */
+        .hobbies-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .hobby-item {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+
+        .hobby-item:hover {
+            transform: translateY(-3px);
+        }
+
+        /* 带图片的兴趣爱好 */
+        .hobbies-with-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .hobby-image-item {
+            background: var(--bg-light);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .hobby-image-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .hobby-image {
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .hobby-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .hobby-image-item:hover .hobby-image img {
+            transform: scale(1.1);
+        }
+
+        .hobby-info {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            color: white;
+            font-weight: 500;
+        }
+
+        .hobby-info i {
+            font-size: 1.2em;
+        }
+
+        /* 学习感悟 */
+        .insight-content {
+            background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border-left: 4px solid #00b894;
+        }
+
+        .insight-quote {
+            position: relative;
+            text-align: center;
+        }
+
+        .quote-icon {
+            color: #00b894;
+            font-size: 1.5em;
+            opacity: 0.5;
+        }
+
+        .insight-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #2d3436;
+            margin: 15px 0;
+            font-style: italic;
+            text-align: justify;
+            text-align-last: center;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            padding: 20px;
+            font-size: 0.9em;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .name {
+                font-size: 2em;
+            }
+            
+            .tags {
+                justify-content: center;
+            }
+            
+            .contact-info {
+                justify-content: center;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景植物装饰 -->
+    <div class="bg-plants">
+        <div class="plant-decoration">🌿</div>
+        <div class="plant-decoration">🌱</div>
+        <div class="plant-decoration">🍃</div>
+        <div class="plant-decoration">🌾</div>
+        <div class="plant-decoration">🌵</div>
+        <div class="plant-decoration">🌿</div>
+        <div class="plant-decoration">🌱</div>
+        <div class="plant-decoration">🍃</div>
+        <div class="plant-decoration">🌲</div>
+        <div class="plant-decoration">🌳</div>
+        <div class="plant-decoration">🌴</div>
+        <div class="plant-decoration">🌵</div>
+        <div class="plant-decoration">🌿</div>
+        <div class="plant-decoration">🍀</div>
+        <div class="plant-decoration">🌱</div>
+        <div class="plant-decoration">🍃</div>
+    </div>
+
+    <!-- 角落植物装饰 -->
+    <div class="corner-plant top-left">🌿</div>
+    <div class="corner-plant top-right">🌱</div>
+    <div class="corner-plant bottom-left">🍃</div>
+    <div class="corner-plant bottom-right">🌾</div>
+
+    <!-- 藤蔓装饰 -->
+    <div class="vine-decoration left">🌿</div>
+    <div class="vine-decoration right">🌿</div>
+
+    <!-- 花朵点缀 -->
+    <div class="flower-decoration">🌸</div>
+    <div class="flower-decoration">🌺</div>
+    <div class="flower-decoration">🌻</div>
+    <div class="flower-decoration">🌷</div>
+    <div class="flower-decoration">🌼</div>
+    <div class="flower-decoration">🌹</div>
+
+    <!-- 漂浮叶子 -->
+    <div class="floating-leaves">
+        <div class="floating-leaf">🍃</div>
+        <div class="floating-leaf">🌿</div>
+        <div class="floating-leaf">🍀</div>
+        <div class="floating-leaf">🌱</div>
+        <div class="floating-leaf">🍃</div>
+        <div class="floating-leaf">🌿</div>
+        <div class="floating-leaf">�</div>
+        <div class="floating-leaf">🍁</div>
+        <div class="floating-leaf">�</div>
+        <div class="floating-leaf">🌿</div>
+        <div class="floating-leaf">🍀</div>
+        <div class="floating-leaf">🌱</div>
+        <div class="floating-leaf">🍃</div>
+        <div class="floating-leaf">🌿</div>
+        <div class="floating-leaf">🍂</div>
+        <div class="floating-leaf">🍁</div>
+    </div>
+
+    <!-- 底部草地装饰 -->
+    <div class="bottom-grass">
+        <div class="grass-blade">�</div>
+        <div class="grass-blade">�</div>
+        <div class="grass-blade">🍃</div>
+        <div class="grass-blade">🌱</div>
+        <div class="grass-blade">🌿</div>
+        <div class="grass-blade">🍃</div>
+        <div class="grass-blade">🌱</div>
+        <div class="grass-blade">🌿</div>
+        <div class="grass-blade">🍃</div>
+        <div class="grass-blade">🌱</div>
+    </div>
+
+    <div class="container">
+        <!-- 基础信息 -->
+        <div class="header">
+            <div class="avatar-section">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            <div class="basic-info">
+                <h1 class="name">nono</h1>
+                <div class="tags">
+                    <span class="tag">👨 男</span>
+                    <span class="tag">🎓 计算机专业大二</span>
+                    <span class="tag">💻 前端开发学习者</span>
+                    <span class="tag">🎮 游戏爱好者</span>
+                </div>
+                <div class="school-info">
+                    <i class="fas fa-university"></i> 电子科技大学成都学院 · 计算机学院 · 软件工程专业
+                </div>
+                <div class="school-info">
+                    <i class="fas fa-calendar-alt"></i> 2022级 | 预计2026年毕业 | 本科
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>CN3189606919@163.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 专业技能 -->
+        <div class="card">
+            <h2 class="card-title">
+                <i class="fas fa-code"></i>
+                核心技能
+            </h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>💻 技术技能</h4>
+                    <div class="skill-item">
+                        <span class="skill-name">Python</span>
+                        <span class="skill-level level-proficient">熟练</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">SQL</span>
+                        <span class="skill-level level-mastered">掌握</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">HTML/CSS</span>
+                        <span class="skill-level level-basic">基础</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Matlab</span>
+                        <span class="skill-level level-learning">了解</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>📝 非技术技能</h4>
+                    <div class="skill-item">
+                        <span class="skill-name">文案写作</span>
+                        <span class="skill-level level-proficient">熟练</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">PPT制作</span>
+                        <span class="skill-level level-mastered">掌握</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">英语口语</span>
+                        <span class="skill-level level-basic">基础</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">数据分析</span>
+                        <span class="skill-level level-mastered">掌握</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h4>📚 核心课程</h4>
+                    <div class="skill-item">
+                        <span class="skill-name">数据结构</span>
+                        <span class="skill-level level-mastered">已修</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">PBL项目</span>
+                        <span class="skill-level level-mastered">已修</span>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">JavaWeb</span>
+                        <span class="skill-level level-learning">学习中</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 校园实践经历 -->
+        <div class="card">
+            <h2 class="card-title">
+                <i class="fas fa-briefcase"></i>
+                校园实践与经历
+            </h2>
+            <div class="experience-item">
+                <div class="experience-title">👨‍🏫 寒暑假授课辅导</div>
+                <div class="experience-desc">担任中小学生授课辅导老师，积累了丰富的教学经验</div>
+            </div>
+            <div class="experience-item">
+                <div class="experience-title">📱 PBL健身运动APP页面设计</div>
+                <div class="experience-desc">小组作业项目，负责APP页面设计与前端开发</div>
+            </div>
+        </div>
+
+        <!-- 证书与学习计划 -->
+        <div class="card">
+            <h2 class="card-title">
+                <i class="fas fa-certificate"></i>
+                证书与学习计划
+            </h2>
+            <div class="cert-grid">
+                <div class="cert-item">
+                    <div class="cert-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h4>普通话证书</h4>
+                        <p>二级乙等</p>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h4>正在学习</h4>
+                        <p>JavaWeb框架</p>
+                    </div>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon">
+                        <i class="fas fa-flag"></i>
+                    </div>
+                    <div class="cert-content">
+                        <h4>计划目标</h4>
+                        <p>2026年考取英语四级</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 学习感悟 -->
+        <div class="card">
+            <h2 class="card-title">
+                <i class="fas fa-lightbulb"></i>
+                学习感悟
+            </h2>
+            <div class="insight-content">
+                <div class="insight-quote">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p class="insight-text">
+                        学习是一场不断探索的旅程，从知识的海洋中汲取养分，在思考与实践中沉淀力量。每一次专注，都是对未来的投资。保持好奇，持之以恒，终能领略更高处的风景。
+                    </p>
+                    <i class="fas fa-quote-right quote-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 兴趣爱好 -->
+        <div class="card">
+            <h2 class="card-title">
+                <i class="fas fa-heart"></i>
+                兴趣爱好
+            </h2>
+            <div class="hobbies-with-images">
+                <div class="hobby-image-item">
+                    <div class="hobby-image">
+                        <img src="https://images.unsplash.com/photo-1500835556837-99ac94a94552?w=300&h=200&fit=crop" alt="旅游">
+                    </div>
+                    <div class="hobby-info">
+                        <i class="fas fa-plane"></i>
+                        <span>旅游</span>
+                    </div>
+                </div>
+                <div class="hobby-image-item">
+                    <div class="hobby-image">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&h=200&fit=crop" alt="游戏">
+                    </div>
+                    <div class="hobby-info">
+                        <i class="fas fa-gamepad"></i>
+                        <span>游戏</span>
+                    </div>
+                </div>
+                <div class="hobby-image-item">
+                    <div class="hobby-image">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=300&h=200&fit=crop" alt="编程">
+                    </div>
+                    <div class="hobby-info">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>编程</span>
+                    </div>
+                </div>
+                <div class="hobby-image-item">
+                    <div class="hobby-image">
+                        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=300&h=200&fit=crop" alt="音乐">
+                    </div>
+                    <div class="hobby-info">
+                        <i class="fas fa-music"></i>
+                        <span>音乐</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>🌟 持续学习中，期待与你交流！</p>
+            <p>© 2024 nono | 电子科技大学成都学院</p>
+        </div>
+    </div>
+</body>
+</html>
